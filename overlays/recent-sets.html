@@ -100,13 +100,13 @@
   </head>
   <body>
     <div class="overlay">
-      <div id="configPanel" class="config">
+      <form id="configPanel" class="config" onsubmit="startOverlay(event)">
         <div id="tokenField" style="display: none">
           <input id="tokenInput" placeholder="Paste Start.gg API Token" /><br />
         </div>
         <input id="urlInput" placeholder="Paste Start.gg event URL" /><br />
-        <button onclick="startOverlay()">Start</button>
-      </div>
+        <button type="submit">Start</button>
+      </form>
       <div class="header">Recent Sets</div>
       <div id="setsContainer"></div>
     </div>
@@ -197,7 +197,9 @@
         }
       }
 
-      function startOverlay() {
+      function startOverlay(e) {
+        e.preventDefault();
+
         if (!authToken) {
           authToken = document.getElementById("tokenInput").value.trim();
           if (!authToken) {
