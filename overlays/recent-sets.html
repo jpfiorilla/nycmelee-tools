@@ -4,11 +4,18 @@
     <meta charset="UTF-8" />
     <title>Start.gg Bracket Overlay</title>
     <style>
+      @font-face {
+        font-family: "Coolvetica";
+        src: url("fonts/Coolvetica Rg.otf") format("opentype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
       body {
         margin: 0;
         padding: 0;
         background: transparent;
-        font-family: Arial, sans-serif;
+        font-family: "Coolvetica", Arial, sans-serif;
         color: #fff;
       }
       .overlay {
@@ -24,6 +31,8 @@
         font-size: 24px;
         margin-bottom: 8px;
         text-align: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
       .set {
         display: flex;
@@ -75,6 +84,16 @@
       }
       #configPanel.hidden {
         display: none;
+      }
+      body,
+      .overlay,
+      .header,
+      .set,
+      .players,
+      .player,
+      .round {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
     </style>
     <script src="recent-sets-config.js"></script>
@@ -188,7 +207,15 @@
           localStorage.setItem("startggToken", authToken);
         }
 
-        const url = document.getElementById("urlInput").value.trim();
+        let url =
+          window.STARTGG_URL ||
+          document.getElementById("urlInput").value.trim();
+
+        if (!url) {
+          alert("Please enter a Start.gg event URL.");
+          return;
+        }
+
         const slug = extractSlugFromUrl(url);
         if (!slug) return;
 
